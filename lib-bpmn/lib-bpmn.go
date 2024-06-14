@@ -3,6 +3,7 @@ package libbpmn
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/nitram509/lib-bpmn-engine/pkg/bpmn_engine"
 )
@@ -24,7 +25,7 @@ func (BpmnEngine) Execute(config BpmnEngineConfig) (*bpmn_engine.ProcessInstance
 	}
 	fmt.Printf("Loaded BPMN file: %s\n", config.BpmnFile)
 
-	engine.AddTaskHandler(config.TaskId, printContextHandler)
+	engine.AddTaskHandler(config.TaskId, userTaskHandler())
 	fmt.Printf("Added task handler for task: %s\n", config.TaskId)
 
 	variables := config.Variables
@@ -33,7 +34,8 @@ func (BpmnEngine) Execute(config BpmnEngineConfig) (*bpmn_engine.ProcessInstance
 	}
 	fmt.Printf("Starting process instance with variables: %v\n", variables)
 
-	return engine.CreateAndRunInstance(process.ProcessKey, variables)
+	engine.CreateAndRunInstance(process.ProcessKey, variables)
+	return engine.RunOrContinueInstance(process.ProcessKey)
 }
 
 func printContextHandler(job bpmn_engine.ActivatedJob) {
@@ -48,4 +50,31 @@ func printContextHandler(job bpmn_engine.ActivatedJob) {
 	fmt.Printf("////////////////////////////////////////\n\n")
 
 	job.Complete()
+}
+
+var externalEvent = "none"
+
+func userTaskHandler() func(job bpmn_engine.ActivatedJob) {
+	return func(job bpmn_engine.ActivatedJob) {
+		if externalEvent == "none" {
+			// send notification to user
+			fmt.Printf("Sending notification to user ...\n")
+			time.Sleep(5 * time.Second)
+
+			// wait for user response
+			fmt.Printf("Waiting for user response ...\n")
+			time.Sleep(5 * time.Second)
+
+			// simulate user response
+			externalEvent = "user is done"
+		}
+		if externalEvent == "user is done" {
+			fmt.Printf("User is done!\n")
+			job.Complete()
+		}
+		if externalEvent == "user is done but wrong response" {
+			job.Fail("error in user task")
+		}
+		// just return and so 'pause' the process instance
+	}
 }

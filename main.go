@@ -1,17 +1,15 @@
 package main
 
 import (
+	"fmt"
 	libbpmn "test/main/lib-bpmn"
-	zenEngine "test/main/zen"
-
-	zen "github.com/gorules/zen-go"
 )
 
 func main() {
 	bpmnConf := libbpmn.BpmnEngineConfig{
 		EngineName: "libBpmn",
-		BpmnFile:   "simple_task.bpmn",
-		TaskId:     "hello-world",
+		BpmnFile:   "simple_task_user.bpmn",
+		TaskId:     "user-task",
 		Variables:  map[string]interface{}{"temp": "hot", "act": "outside"},
 	}
 
@@ -21,7 +19,9 @@ func main() {
 		panic(err)
 	}
 
-	zenEngine.Execute(zen.EngineConfig{}, "./graph.json", map[string]interface{}{
-		"temp": context.GetVariable("temp"), "act": context.GetVariable("act"),
-	})
+	fmt.Printf("Process instance completed: %+v\n", context)
+
+	// zenEngine.Execute(zen.EngineConfig{}, "./graph.json", map[string]interface{}{
+	// 	"temp": context.GetVariable("temp"), "act": context.GetVariable("act"),
+	// })
 }
