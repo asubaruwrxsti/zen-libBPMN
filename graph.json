@@ -1,0 +1,97 @@
+{
+  "contentType": "application/vnd.gorules.decision",
+  "nodes": [
+    {
+      "id": "99bc56c8-2d3a-4c8a-bc73-ba5b0701c646",
+      "type": "inputNode",
+      "position": {
+        "x": 50,
+        "y": 225
+      },
+      "name": "request"
+    },
+    {
+      "id": "8d76b322-480e-4539-80c3-41dd7135b38c",
+      "type": "decisionTableNode",
+      "position": {
+        "x": 405,
+        "y": 220
+      },
+      "name": "decisionTable1",
+      "content": {
+        "hitPolicy": "first",
+        "inputs": [
+          {
+            "id": "6c9fe56f-32b0-43a6-9051-3ee6904089b7",
+            "type": "expression",
+            "field": "temp",
+            "name": "Temprature"
+          },
+          {
+            "id": "7330d452-aa55-487e-adb8-e4717f8111b9",
+            "type": "expression",
+            "field": "act",
+            "name": "Activity"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "4afa476c-489d-437a-9b96-ff0158be66ff",
+            "field": "output",
+            "name": "Clothes",
+            "type": "expression"
+          }
+        ],
+        "rules": [
+          {
+            "_id": "e538a5ee-028f-4514-85ed-aed44e814783",
+            "6c9fe56f-32b0-43a6-9051-3ee6904089b7": "\"hot\"",
+            "7330d452-aa55-487e-adb8-e4717f8111b9": "\"outside\"",
+            "4afa476c-489d-437a-9b96-ff0158be66ff": "\"shorts\""
+          },
+          {
+            "_id": "bf33f2a5-cf4a-447f-9692-db1874b1d3a7",
+            "6c9fe56f-32b0-43a6-9051-3ee6904089b7": "\"cold\"",
+            "7330d452-aa55-487e-adb8-e4717f8111b9": "\"ouside\"",
+            "4afa476c-489d-437a-9b96-ff0158be66ff": "\"pants\""
+          },
+          {
+            "_id": "74102336-9039-4361-ad85-76f25f95f97d",
+            "6c9fe56f-32b0-43a6-9051-3ee6904089b7": "\"hot\"",
+            "7330d452-aa55-487e-adb8-e4717f8111b9": "\"inside\"",
+            "4afa476c-489d-437a-9b96-ff0158be66ff": "\"shorts\""
+          },
+          {
+            "_id": "de218e53-ddd0-4ad1-bf5c-18e26e2de041",
+            "6c9fe56f-32b0-43a6-9051-3ee6904089b7": "\"cold\"",
+            "7330d452-aa55-487e-adb8-e4717f8111b9": "\"inside\"",
+            "4afa476c-489d-437a-9b96-ff0158be66ff": "\"pants\""
+          }
+        ]
+      }
+    },
+    {
+      "id": "412ea7e4-92c4-4841-894b-02d59a3928fc",
+      "type": "outputNode",
+      "position": {
+        "x": 750,
+        "y": 230
+      },
+      "name": "response"
+    }
+  ],
+  "edges": [
+    {
+      "id": "6aaa5e65-8a96-49b0-8ca2-0ef6f51eca4f",
+      "sourceId": "99bc56c8-2d3a-4c8a-bc73-ba5b0701c646",
+      "type": "edge",
+      "targetId": "8d76b322-480e-4539-80c3-41dd7135b38c"
+    },
+    {
+      "id": "ec7afb65-0b64-4d94-a308-0510db36d3c7",
+      "sourceId": "8d76b322-480e-4539-80c3-41dd7135b38c",
+      "type": "edge",
+      "targetId": "412ea7e4-92c4-4841-894b-02d59a3928fc"
+    }
+  ]
+}
